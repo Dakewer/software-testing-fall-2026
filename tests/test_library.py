@@ -104,3 +104,9 @@ def test_return_book_fails_for_unknown_book(library, member):
 def test_search_by_title_finds_partial_case_insensitive_match(library, book):
     library.add_book(book)
     assert library.search_by_title("clean") == [book]
+
+
+def test_search_by_author_finds_partial_case_insensitive_match(library, book):
+    library.add_book(book)
+    library.add_book(Book("0987654321", "Refactoring", "Martin Fowler"))
+    assert library.search_by_author("fowler") == [library.get_book("0987654321")]
