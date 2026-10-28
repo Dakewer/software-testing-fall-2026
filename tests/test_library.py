@@ -78,3 +78,12 @@ def test_failed_borrow_of_unavailable_book_leaves_member_untouched(library, memb
     with pytest.raises(ValueError, match="No copies"):
         library.borrow_book("M001", "1234567890")
     assert member.borrowed_books == []
+
+
+def test_return_book_gives_copy_back_and_clears_member_loan(library, book, member):
+    library.add_book(book)
+    library.register_member(member)
+    library.borrow_book("M001", "1234567890")
+    library.return_book("M001", "1234567890")
+    assert member.borrowed_books == []
+    assert book.available_copies == 2
