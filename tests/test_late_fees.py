@@ -42,3 +42,9 @@ def test_returned_books_no_longer_accrue_fees(library):
     library.borrow_book("M001", "1234567890", borrow_date=BORROW_DATE)
     library.return_book("M001", "1234567890")
     assert library.calculate_late_fee("M001", as_of=date(2026, 3, 1)) == 0
+
+
+def test_return_book_reports_fee_for_that_loan(library):
+    library.borrow_book("M001", "1234567890", borrow_date=BORROW_DATE)
+    fee = library.return_book("M001", "1234567890", return_date=date(2026, 1, 20))
+    assert fee == 5
