@@ -31,3 +31,13 @@ def test_book_tracks_total_copies():
 def test_book_rejects_isbn_with_wrong_length():
     with pytest.raises(ValueError):
         Book("12345", "Test Book", "Author")
+
+
+def test_book_accepts_13_digit_isbn():
+    book = Book("1234567890123", "Test Book", "Author")
+    assert book.isbn == "1234567890123"
+
+
+def test_book_rejects_isbn_with_non_digits():
+    with pytest.raises(ValueError):
+        Book("12345abcde", "Test Book", "Author")
