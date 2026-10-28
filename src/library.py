@@ -32,6 +32,8 @@ class Library:
         book.borrow()
 
     def return_book(self, member_id, isbn):
+        if member_id not in self._members:
+            raise ValueError("Unknown member")
         member = self._members[member_id]
         book = self._books[isbn]
         member.return_book(isbn)
