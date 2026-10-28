@@ -1,4 +1,5 @@
 CATEGORY_LIMITS = {"student": 3, "faculty": 5, "public": 2}
+CATEGORY_FEE_RATES = {"student": 1.0, "faculty": 0.5, "public": 2.0}
 
 
 class Member:
@@ -11,6 +12,7 @@ class Member:
         if max_borrow_limit is None:
             max_borrow_limit = CATEGORY_LIMITS[category]
         self.max_borrow_limit = max_borrow_limit
+        self.late_fee_rate = CATEGORY_FEE_RATES[category]
         self.borrowed_books = []
 
     @staticmethod
