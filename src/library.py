@@ -61,3 +61,6 @@ class Library:
 
     def get_due_date(self, member_id, isbn):
         return self._loans[(member_id, isbn)] + timedelta(days=LOAN_DAYS)
+
+    def calculate_late_fee(self, member_id, as_of):
+        return 0
