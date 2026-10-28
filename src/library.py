@@ -26,5 +26,5 @@ class Library:
             raise ValueError("Unknown book")
         member = self._members[member_id]
         book = self._books[isbn]
-        book.borrow()
         member.add_borrowed_book(isbn)
+        book.borrow()
