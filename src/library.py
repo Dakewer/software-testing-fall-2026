@@ -66,12 +66,11 @@ class Library:
         return self._loans[(member_id, isbn)] + timedelta(days=LOAN_DAYS)
 
     def calculate_late_fee(self, member_id, as_of):
-        fee = 0
-        for (loan_member, isbn), borrowed_on in self._loans.items():
-            due = borrowed_on + timedelta(days=LOAN_DAYS)
-            if loan_member == member_id and as_of > due:
-                fee += (as_of - due).days
-        return fee
+        return sum(
+            self._loan_fee(loan_member, isbn, as_of)
+            for loan_member, isbn in self._loans
+            if loan_member == member_id
+        )
 
     def _loan_fee(self, member_id, isbn, as_of):
         due = self.get_due_date(member_id, isbn)
