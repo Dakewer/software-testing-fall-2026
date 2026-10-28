@@ -18,3 +18,11 @@ def test_public_member_can_borrow_two_books():
 def test_unknown_category_is_rejected():
     with pytest.raises(ValueError, match="Unknown category"):
         Member("X001", "Nobody", category="alien")
+
+
+@pytest.mark.parametrize(
+    "category, rate",
+    [("student", 1.0), ("faculty", 0.5), ("public", 2.0)],
+)
+def test_each_category_has_its_own_late_fee_rate(category, rate):
+    assert Member("M001", "Someone", category=category).late_fee_rate == rate
