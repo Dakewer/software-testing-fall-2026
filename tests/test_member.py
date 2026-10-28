@@ -33,3 +33,10 @@ def test_member_cannot_borrow_at_limit():
     member = Member("M001", "Alice", max_borrow_limit=1)
     member.add_borrowed_book("1234567890")
     assert member.can_borrow() is False
+
+
+def test_add_borrowed_book_fails_beyond_limit():
+    member = Member("M001", "Alice", max_borrow_limit=1)
+    member.add_borrowed_book("1234567890")
+    with pytest.raises(ValueError):
+        member.add_borrowed_book("0987654321")
