@@ -93,3 +93,9 @@ def test_return_book_fails_for_unknown_member(library, book):
     library.add_book(book)
     with pytest.raises(ValueError, match="Unknown member"):
         library.return_book("NOPE", "1234567890")
+
+
+def test_return_book_fails_for_unknown_book(library, member):
+    library.register_member(member)
+    with pytest.raises(ValueError, match="Unknown book"):
+        library.return_book("M001", "9999999999")
