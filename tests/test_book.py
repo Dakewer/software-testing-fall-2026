@@ -46,3 +46,8 @@ def test_book_rejects_isbn_with_non_digits():
 def test_book_requires_title():
     with pytest.raises(ValueError):
         Book("1234567890", "", "Author")
+
+
+def test_book_rejects_whitespace_only_title():
+    with pytest.raises(ValueError):
+        Book("1234567890", "   ", "Author")
