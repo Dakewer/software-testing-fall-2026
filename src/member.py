@@ -1,13 +1,17 @@
 class Member:
     def __init__(self, member_id, name, max_borrow_limit=3):
-        if not member_id:
-            raise ValueError("Member id is required")
-        if not name or not name.strip():
-            raise ValueError("Member name is required")
+        self._validate_identity(member_id, name)
         self.member_id = member_id
         self.name = name
         self.max_borrow_limit = max_borrow_limit
         self.borrowed_books = []
+
+    @staticmethod
+    def _validate_identity(member_id, name):
+        if not member_id:
+            raise ValueError("Member id is required")
+        if not name or not name.strip():
+            raise ValueError("Member name is required")
 
     def can_borrow(self):
         return len(self.borrowed_books) < self.max_borrow_limit
