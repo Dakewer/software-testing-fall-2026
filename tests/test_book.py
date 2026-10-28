@@ -1,3 +1,5 @@
+import pytest
+
 from src.book import Book
 
 
@@ -24,3 +26,8 @@ def test_book_not_available_when_no_copies():
 def test_book_tracks_total_copies():
     book = Book("1234567890", "Test Book", "Author", copies=5)
     assert book.total_copies == 5
+
+
+def test_book_rejects_isbn_with_wrong_length():
+    with pytest.raises(ValueError):
+        Book("12345", "Test Book", "Author")
