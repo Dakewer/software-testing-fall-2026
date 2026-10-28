@@ -34,3 +34,9 @@ def test_library_rejects_duplicate_isbn(library, book):
 def test_library_can_register_member(library, member):
     library.register_member(member)
     assert library.get_member("M001") is member
+
+
+def test_library_rejects_duplicate_member(library, member):
+    library.register_member(member)
+    with pytest.raises(ValueError, match="already registered"):
+        library.register_member(Member("M001", "Bob"))
