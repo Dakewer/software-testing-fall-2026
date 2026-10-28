@@ -38,12 +38,16 @@ class Library:
         book.return_copy()
 
     def search_by_title(self, title):
-        if not title.strip():
-            raise ValueError("Search query cannot be empty")
-        return [book for book in self._books.values() if title.lower() in book.title.lower()]
+        return self._search("title", title)
 
     def search_by_author(self, author):
-        return [book for book in self._books.values() if author.lower() in book.author.lower()]
+        return self._search("author", author)
 
     def get_available_books(self):
         return [book for book in self._books.values() if book.is_available()]
+
+    def _search(self, field, query):
+        if not query.strip():
+            raise ValueError("Search query cannot be empty")
+        needle = query.lower()
+        return [b for b in self._books.values() if needle in getattr(b, field).lower()]
