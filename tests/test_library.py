@@ -60,3 +60,13 @@ def test_borrow_book_fails_for_unknown_book(library, member):
     library.register_member(member)
     with pytest.raises(ValueError, match="Unknown book"):
         library.borrow_book("M001", "9999999999")
+
+
+def test_failed_borrow_at_limit_does_not_take_a_copy(library):
+    library.add_book(Book("1234567890", "A", "Author", copies=2))
+    library.add_book(Book("0987654321", "B", "Author", copies=2))
+    library.register_member(Member("M001", "Alice", max_borrow_limit=1))
+    library.borrow_book("M001", "1234567890")
+    with pytest.raises(ValueError, match="limit"):
+        library.borrow_book("M001", "0987654321")
+    assert library.get_book("0987654321").available_copies == 2
