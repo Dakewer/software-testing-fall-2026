@@ -85,4 +85,4 @@ class Library:
         return max(0, (as_of - due).days) * rate
 
     def get_history(self, member_id):
-        return self._history
+        return [e for e in self._history if e.member_id == member_id]
