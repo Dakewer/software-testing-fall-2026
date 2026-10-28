@@ -115,3 +115,9 @@ def test_search_by_author_finds_partial_case_insensitive_match(library, book):
 def test_search_with_blank_query_is_rejected(library):
     with pytest.raises(ValueError, match="empty"):
         library.search_by_title("  ")
+
+
+def test_get_available_books_excludes_books_without_copies(library, book):
+    library.add_book(book)
+    library.add_book(Book("0987654321", "Out Of Stock", "Author", copies=0))
+    assert library.get_available_books() == [book]
