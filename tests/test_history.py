@@ -27,3 +27,9 @@ def test_return_is_recorded_in_member_history(library):
     library.borrow_book("M001", "1234567890", borrow_date=date(2026, 1, 1))
     library.return_book("M001", "1234567890", return_date=date(2026, 1, 5))
     assert [e.action for e in library.get_history("M001")] == ["borrow", "return"]
+
+
+def test_history_only_contains_events_of_that_member(library):
+    library.borrow_book("M001", "1234567890", borrow_date=date(2026, 1, 1))
+    library.borrow_book("M002", "0987654321", borrow_date=date(2026, 1, 2))
+    assert [e.isbn for e in library.get_history("M002")] == ["0987654321"]
