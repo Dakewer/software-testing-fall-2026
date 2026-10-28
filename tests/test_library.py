@@ -48,3 +48,9 @@ def test_borrow_book_gives_book_to_member_and_reduces_copies(library, book, memb
     library.borrow_book("M001", "1234567890")
     assert member.borrowed_books == ["1234567890"]
     assert book.available_copies == 1
+
+
+def test_borrow_book_fails_for_unknown_member(library, book):
+    library.add_book(book)
+    with pytest.raises(ValueError, match="Unknown member"):
+        library.borrow_book("NOPE", "1234567890")
