@@ -1,3 +1,4 @@
+from collections import Counter
 from datetime import date, timedelta
 
 from src.history import HistoryEvent
@@ -97,3 +98,7 @@ class Library:
             "total_returns": sum(1 for e in events if e.action == "return"),
             "currently_borrowed": list(member.borrowed_books),
         }
+
+    def most_borrowed_book(self):
+        counts = Counter(e.isbn for e in self._history if e.action == "borrow")
+        return counts.most_common(1)[0][0]
