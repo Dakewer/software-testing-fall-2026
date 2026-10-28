@@ -43,6 +43,7 @@ class Library:
         book = self.get_book(isbn)
         member.return_book(isbn)
         book.return_copy()
+        del self._loans[(member_id, isbn)]
 
     def search_by_title(self, title):
         return self._search("title", title)
