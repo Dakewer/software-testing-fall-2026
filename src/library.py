@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 
 LOAN_DAYS = 14
 
@@ -36,7 +36,7 @@ class Library:
             raise ValueError("No copies available")
         member.add_borrowed_book(isbn)
         book.borrow()
-        self._loans[(member_id, isbn)] = borrow_date
+        self._loans[(member_id, isbn)] = borrow_date or date.today()
 
     def return_book(self, member_id, isbn):
         member = self.get_member(member_id)
