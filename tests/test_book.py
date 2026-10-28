@@ -56,3 +56,9 @@ def test_book_rejects_whitespace_only_title():
 def test_book_rejects_negative_copies():
     with pytest.raises(ValueError):
         Book("1234567890", "Test Book", "Author", copies=-1)
+
+
+def test_borrow_decreases_available_copies():
+    book = Book("1234567890", "Test Book", "Author", copies=2)
+    book.borrow()
+    assert book.available_copies == 1
