@@ -3,3 +3,4 @@ class Member:
         self.member_id = member_id
         self.name = name
         self.max_borrow_limit = max_borrow_limit
+        self.borrowed_books = []
