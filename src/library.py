@@ -30,3 +30,9 @@ class Library:
             raise ValueError("No copies available")
         member.add_borrowed_book(isbn)
         book.borrow()
+
+    def return_book(self, member_id, isbn):
+        member = self._members[member_id]
+        book = self._books[isbn]
+        member.return_book(isbn)
+        book.return_copy()
