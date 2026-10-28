@@ -21,3 +21,8 @@ def library():
 def test_due_date_is_14_days_after_borrow(library):
     library.borrow_book("M001", "1234567890", borrow_date=BORROW_DATE)
     assert library.get_due_date("M001", "1234567890") == date(2026, 1, 15)
+
+
+def test_borrow_date_defaults_to_today(library):
+    library.borrow_book("M001", "1234567890")
+    assert library.get_due_date("M001", "1234567890") == date.today() + timedelta(days=14)
