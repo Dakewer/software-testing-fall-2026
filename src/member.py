@@ -1,8 +1,10 @@
 class Member:
-    def __init__(self, member_id, name, max_borrow_limit=3):
+    def __init__(self, member_id, name, max_borrow_limit=None, category="student"):
         self._validate_identity(member_id, name)
         self.member_id = member_id
         self.name = name
+        if max_borrow_limit is None:
+            max_borrow_limit = 5 if category == "faculty" else 3
         self.max_borrow_limit = max_borrow_limit
         self.borrowed_books = []
 
