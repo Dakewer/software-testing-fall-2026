@@ -99,3 +99,8 @@ def test_return_book_fails_for_unknown_book(library, member):
     library.register_member(member)
     with pytest.raises(ValueError, match="Unknown book"):
         library.return_book("M001", "9999999999")
+
+
+def test_search_by_title_finds_partial_case_insensitive_match(library, book):
+    library.add_book(book)
+    assert library.search_by_title("clean") == [book]
