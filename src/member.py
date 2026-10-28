@@ -11,6 +11,8 @@ class Member:
     def add_borrowed_book(self, isbn):
         if not self.can_borrow():
             raise ValueError("Borrow limit reached")
+        if isbn in self.borrowed_books:
+            raise ValueError("Book already borrowed by this member")
         self.borrowed_books.append(isbn)
 
     def return_book(self, isbn):
