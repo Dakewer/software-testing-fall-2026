@@ -46,10 +46,12 @@ class Library:
     def return_book(self, member_id, isbn, return_date=None):
         member = self.get_member(member_id)
         book = self.get_book(isbn)
-        fee = self._loan_fee(member_id, isbn, return_date or date.today())
+        return_date = return_date or date.today()
+        fee = self._loan_fee(member_id, isbn, return_date)
         member.return_book(isbn)
         book.return_copy()
         del self._loans[(member_id, isbn)]
+        self._history.append(HistoryEvent(member_id, isbn, "return", return_date))
         return fee
 
     def search_by_title(self, title):
