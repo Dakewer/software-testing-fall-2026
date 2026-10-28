@@ -36,3 +36,14 @@ def test_library_charges_late_fees_using_member_rate():
     library.borrow_book("F001", "1234567890", borrow_date=date(2026, 1, 1))
     library.borrow_book("F001", "0987654321", borrow_date=date(2026, 1, 3))
     assert library.calculate_late_fee("F001", as_of=date(2026, 1, 20)) == 4.0
+
+
+def test_library_enforces_category_borrow_limit():
+    library = Library()
+    for isbn in ("1234567890", "0987654321", "1111111111"):
+        library.add_book(Book(isbn, "Title", "Author"))
+    library.register_member(Member("P001", "Visitor", category="public"))
+    library.borrow_book("P001", "1234567890")
+    library.borrow_book("P001", "0987654321")
+    with pytest.raises(ValueError, match="limit"):
+        library.borrow_book("P001", "1111111111")
