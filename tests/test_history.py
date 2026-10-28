@@ -46,3 +46,10 @@ def test_member_history_report_summarizes_activity(library):
         "total_returns": 1,
         "currently_borrowed": ["0987654321"],
     }
+
+
+def test_most_borrowed_book_is_the_isbn_borrowed_most_often(library):
+    library.borrow_book("M001", "1234567890", borrow_date=date(2026, 1, 1))
+    library.borrow_book("M002", "1234567890", borrow_date=date(2026, 1, 2))
+    library.borrow_book("M001", "0987654321", borrow_date=date(2026, 1, 3))
+    assert library.most_borrowed_book() == "1234567890"
