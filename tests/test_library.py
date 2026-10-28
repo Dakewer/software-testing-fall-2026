@@ -87,3 +87,9 @@ def test_return_book_gives_copy_back_and_clears_member_loan(library, book, membe
     library.return_book("M001", "1234567890")
     assert member.borrowed_books == []
     assert book.available_copies == 2
+
+
+def test_return_book_fails_for_unknown_member(library, book):
+    library.add_book(book)
+    with pytest.raises(ValueError, match="Unknown member"):
+        library.return_book("NOPE", "1234567890")
