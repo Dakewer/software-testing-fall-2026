@@ -3,6 +3,7 @@ class Book:
         self.isbn = isbn
         self.title = title
         self.author = author
+        self.total_copies = copies
         self.available_copies = copies
 
     def is_available(self):
