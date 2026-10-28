@@ -57,3 +57,8 @@ def test_most_borrowed_book_is_the_isbn_borrowed_most_often(library):
 
 def test_most_borrowed_book_is_none_without_borrows(library):
     assert library.most_borrowed_book() is None
+
+
+def test_history_report_for_unknown_member_is_rejected(library):
+    with pytest.raises(ValueError, match="Unknown member"):
+        library.member_history_report("NOPE")
