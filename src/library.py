@@ -1,5 +1,7 @@
 from datetime import date, timedelta
 
+from src.history import HistoryEvent
+
 LOAN_DAYS = 14
 
 
@@ -8,6 +10,7 @@ class Library:
         self._books = {}
         self._members = {}
         self._loans = {}
+        self._history = []
 
     def add_book(self, book):
         if book.isbn in self._books:
@@ -36,7 +39,9 @@ class Library:
             raise ValueError("No copies available")
         member.add_borrowed_book(isbn)
         book.borrow()
-        self._loans[(member_id, isbn)] = borrow_date or date.today()
+        borrow_date = borrow_date or date.today()
+        self._loans[(member_id, isbn)] = borrow_date
+        self._history.append(HistoryEvent(member_id, isbn, "borrow", borrow_date))
 
     def return_book(self, member_id, isbn, return_date=None):
         member = self.get_member(member_id)
@@ -76,3 +81,6 @@ class Library:
         due = self.get_due_date(member_id, isbn)
         rate = self.get_member(member_id).late_fee_rate
         return max(0, (as_of - due).days) * rate
+
+    def get_history(self, member_id):
+        return self._history
