@@ -51,3 +51,8 @@ def test_book_requires_title():
 def test_book_rejects_whitespace_only_title():
     with pytest.raises(ValueError):
         Book("1234567890", "   ", "Author")
+
+
+def test_book_rejects_negative_copies():
+    with pytest.raises(ValueError):
+        Book("1234567890", "Test Book", "Author", copies=-1)
