@@ -110,3 +110,8 @@ def test_search_by_author_finds_partial_case_insensitive_match(library, book):
     library.add_book(book)
     library.add_book(Book("0987654321", "Refactoring", "Martin Fowler"))
     assert library.search_by_author("fowler") == [library.get_book("0987654321")]
+
+
+def test_search_with_blank_query_is_rejected(library):
+    with pytest.raises(ValueError, match="empty"):
+        library.search_by_title("  ")
