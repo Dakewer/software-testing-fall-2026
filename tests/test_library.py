@@ -40,3 +40,11 @@ def test_library_rejects_duplicate_member(library, member):
     library.register_member(member)
     with pytest.raises(ValueError, match="already registered"):
         library.register_member(Member("M001", "Bob"))
+
+
+def test_borrow_book_gives_book_to_member_and_reduces_copies(library, book, member):
+    library.add_book(book)
+    library.register_member(member)
+    library.borrow_book("M001", "1234567890")
+    assert member.borrowed_books == ["1234567890"]
+    assert book.available_copies == 1
