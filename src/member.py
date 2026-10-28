@@ -1,5 +1,7 @@
 class Member:
     def __init__(self, member_id, name, max_borrow_limit=3):
+        if not member_id:
+            raise ValueError("Member id is required")
         self.member_id = member_id
         self.name = name
         self.max_borrow_limit = max_borrow_limit
