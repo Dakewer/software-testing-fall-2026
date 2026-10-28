@@ -1,7 +1,13 @@
+from datetime import timedelta
+
+LOAN_DAYS = 14
+
+
 class Library:
     def __init__(self):
         self._books = {}
         self._members = {}
+        self._loans = {}
 
     def add_book(self, book):
         if book.isbn in self._books:
@@ -23,13 +29,14 @@ class Library:
             raise ValueError("Unknown member")
         return self._members[member_id]
 
-    def borrow_book(self, member_id, isbn):
+    def borrow_book(self, member_id, isbn, borrow_date=None):
         member = self.get_member(member_id)
         book = self.get_book(isbn)
         if not book.is_available():
             raise ValueError("No copies available")
         member.add_borrowed_book(isbn)
         book.borrow()
+        self._loans[(member_id, isbn)] = borrow_date
 
     def return_book(self, member_id, isbn):
         member = self.get_member(member_id)
@@ -51,3 +58,6 @@ class Library:
             raise ValueError("Search query cannot be empty")
         needle = query.lower()
         return [b for b in self._books.values() if needle in getattr(b, field).lower()]
+
+    def get_due_date(self, member_id, isbn):
+        return self._loans[(member_id, isbn)] + timedelta(days=LOAN_DAYS)
