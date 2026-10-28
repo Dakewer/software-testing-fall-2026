@@ -31,3 +31,8 @@ def test_borrow_date_defaults_to_today(library):
 def test_no_late_fee_before_due_date(library):
     library.borrow_book("M001", "1234567890", borrow_date=BORROW_DATE)
     assert library.calculate_late_fee("M001", as_of=date(2026, 1, 10)) == 0
+
+
+def test_late_fee_is_one_dollar_per_overdue_day(library):
+    library.borrow_book("M001", "1234567890", borrow_date=BORROW_DATE)
+    assert library.calculate_late_fee("M001", as_of=date(2026, 1, 20)) == 5
