@@ -33,3 +33,16 @@ def test_history_only_contains_events_of_that_member(library):
     library.borrow_book("M001", "1234567890", borrow_date=date(2026, 1, 1))
     library.borrow_book("M002", "0987654321", borrow_date=date(2026, 1, 2))
     assert [e.isbn for e in library.get_history("M002")] == ["0987654321"]
+
+
+def test_member_history_report_summarizes_activity(library):
+    library.borrow_book("M001", "1234567890", borrow_date=date(2026, 1, 1))
+    library.borrow_book("M001", "0987654321", borrow_date=date(2026, 1, 2))
+    library.return_book("M001", "1234567890", return_date=date(2026, 1, 5))
+    assert library.member_history_report("M001") == {
+        "member_id": "M001",
+        "name": "Alice",
+        "total_borrows": 2,
+        "total_returns": 1,
+        "currently_borrowed": ["0987654321"],
+    }
