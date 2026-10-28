@@ -3,6 +3,8 @@ CATEGORY_LIMITS = {"student": 3, "faculty": 5, "public": 2}
 
 class Member:
     def __init__(self, member_id, name, max_borrow_limit=None, category="student"):
+        if category not in CATEGORY_LIMITS:
+            raise ValueError(f"Unknown category: {category}")
         self._validate_identity(member_id, name)
         self.member_id = member_id
         self.name = name
