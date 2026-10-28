@@ -74,4 +74,5 @@ class Library:
 
     def _loan_fee(self, member_id, isbn, as_of):
         due = self.get_due_date(member_id, isbn)
-        return max(0, (as_of - due).days)
+        rate = self.get_member(member_id).late_fee_rate
+        return max(0, (as_of - due).days) * rate
