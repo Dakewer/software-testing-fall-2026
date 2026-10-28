@@ -4,6 +4,8 @@ class Book:
             raise ValueError("ISBN must be 10 or 13 digits")
         if not title or not title.strip():
             raise ValueError("Title is required")
+        if copies < 0:
+            raise ValueError("Copies cannot be negative")
         self.isbn = isbn
         self.title = title
         self.author = author
