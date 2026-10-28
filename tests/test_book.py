@@ -62,3 +62,9 @@ def test_borrow_decreases_available_copies():
     book = Book("1234567890", "Test Book", "Author", copies=2)
     book.borrow()
     assert book.available_copies == 1
+
+
+def test_borrow_fails_when_no_copies_available():
+    book = Book("1234567890", "Test Book", "Author", copies=0)
+    with pytest.raises(ValueError):
+        book.borrow()
