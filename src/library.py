@@ -38,6 +38,8 @@ class Library:
         book.return_copy()
 
     def search_by_title(self, title):
+        if not title.strip():
+            raise ValueError("Search query cannot be empty")
         return [book for book in self._books.values() if title.lower() in book.title.lower()]
 
     def search_by_author(self, author):
