@@ -70,3 +70,11 @@ def test_failed_borrow_at_limit_does_not_take_a_copy(library):
     with pytest.raises(ValueError, match="limit"):
         library.borrow_book("M001", "0987654321")
     assert library.get_book("0987654321").available_copies == 2
+
+
+def test_failed_borrow_of_unavailable_book_leaves_member_untouched(library, member):
+    library.add_book(Book("1234567890", "Rare", "Author", copies=0))
+    library.register_member(member)
+    with pytest.raises(ValueError, match="No copies"):
+        library.borrow_book("M001", "1234567890")
+    assert member.borrowed_books == []
