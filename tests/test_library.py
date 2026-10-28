@@ -29,3 +29,8 @@ def test_library_rejects_duplicate_isbn(library, book):
     library.add_book(book)
     with pytest.raises(ValueError, match="already in catalog"):
         library.add_book(Book("1234567890", "Other", "Someone"))
+
+
+def test_library_can_register_member(library, member):
+    library.register_member(member)
+    assert library.get_member("M001") is member
