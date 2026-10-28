@@ -86,3 +86,14 @@ class Library:
 
     def get_history(self, member_id):
         return [e for e in self._history if e.member_id == member_id]
+
+    def member_history_report(self, member_id):
+        member = self.get_member(member_id)
+        events = self.get_history(member_id)
+        return {
+            "member_id": member_id,
+            "name": member.name,
+            "total_borrows": sum(1 for e in events if e.action == "borrow"),
+            "total_returns": sum(1 for e in events if e.action == "return"),
+            "currently_borrowed": list(member.borrowed_books),
+        }
