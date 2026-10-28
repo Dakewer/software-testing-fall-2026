@@ -38,12 +38,14 @@ class Library:
         book.borrow()
         self._loans[(member_id, isbn)] = borrow_date or date.today()
 
-    def return_book(self, member_id, isbn):
+    def return_book(self, member_id, isbn, return_date=None):
         member = self.get_member(member_id)
         book = self.get_book(isbn)
+        fee = self._loan_fee(member_id, isbn, return_date or date.today())
         member.return_book(isbn)
         book.return_copy()
         del self._loans[(member_id, isbn)]
+        return fee
 
     def search_by_title(self, title):
         return self._search("title", title)
@@ -70,3 +72,7 @@ class Library:
             if loan_member == member_id and as_of > due:
                 fee += (as_of - due).days
         return fee
+
+    def _loan_fee(self, member_id, isbn, as_of):
+        due = self.get_due_date(member_id, isbn)
+        return max(0, (as_of - due).days)
