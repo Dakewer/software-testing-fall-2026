@@ -65,3 +65,8 @@ def test_member_cannot_borrow_same_book_twice():
 def test_member_requires_id():
     with pytest.raises(ValueError, match="id is required"):
         Member("", "Alice")
+
+
+def test_member_requires_name():
+    with pytest.raises(ValueError, match="name is required"):
+        Member("M001", "  ")
