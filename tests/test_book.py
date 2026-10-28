@@ -41,3 +41,8 @@ def test_book_accepts_13_digit_isbn():
 def test_book_rejects_isbn_with_non_digits():
     with pytest.raises(ValueError):
         Book("12345abcde", "Test Book", "Author")
+
+
+def test_book_requires_title():
+    with pytest.raises(ValueError):
+        Book("1234567890", "", "Author")
